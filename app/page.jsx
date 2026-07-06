@@ -12,7 +12,12 @@ const client = createClient({
 
 export default async function HomePage() {
   // Fetch your custom South Africa DMC content live from the database
-  const data = await client.fetch(`*[_type == "homePage"][0]`)
+  // Fetch data with an explicit instructions object to completely bypass all network caches
+  const data = await client.fetch(
+    `*[_type == "homePage"][0]`,
+    {},
+    { cache: 'no-store' }
+  )
 
   // Fallback defaults in case you haven't typed anything into the Studio yet
   const headline = data?.heroHeadline || "Your Premier Adventure DMC & Ground Logistics Partner."[cite: 1]
