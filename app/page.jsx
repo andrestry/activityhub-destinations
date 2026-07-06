@@ -1,45 +1,41 @@
 export const dynamic = 'force-dynamic'
 
-import { createClient } from '@sanity/client'
+// Use the Next.js specific client to prevent build errors
+import { createClient } from 'next-sanity'
 
-// Connect your front-end to your Sanity data pipeline
 const client = createClient({
-  projectId: 'n8tkfq9p', // <-- Replace with your 8-character Sanity Project ID!
+  projectId: 'n8tkfq9p', // <-- Replace with your real 8-character ID!
   dataset: 'production',
   useCdn: false,
   apiVersion: '2026-07-06'
 })
 
 export default async function HomePage() {
-  // Grab the absolute most recently altered document of type "homePage" anywhere in your database
   const data = await client.fetch(
     `*[_type == "homePage"] | order(_updatedAt desc)[0]`,
     {},
     { cache: 'no-store', next: { revalidate: 0 } }
   )
 
-  // Hardcoded production blueprints from your PDF as the absolute default fail-safe[cite: 1]
-  const headline = data?.heroHeadline || "Your Premier Adventure DMC & Ground Logistics Partner."[cite: 1]
-  const subheadline = data?.heroSubHeadline || "Bringing 20+ years of local expertise, unrivaled adventure connections, and seamless B2B ground handling to international tour operators and agents."[cite: 1]
-  const introHeadline = data?.introHeadline || "Deeply Connected. Thoroughly Vetted. Wildly Adventurous."[cite: 1]
-  const introParagraph = data?.introParagraph || "At ActivityHub Destinations, we don't just book itineraries—we curate unforgettable ground experiences. With over two decades of deep-rooted tourism experience, we are the bridge between your clients and the ultimate local adventures."[cite: 1]
+  const headline = data?.heroHeadline || "Your Premier Adventure DMC & Ground Logistics Partner."
+  const subheadline = data?.heroSubHeadline || "Bringing 20+ years of local expertise, unrivaled adventure connections, and seamless B2B ground handling to international tour operators and agents."
+  const introHeadline = data?.introHeadline || "Deeply Connected. Thoroughly Vetted. Wildly Adventurous."
+  const introParagraph = data?.introParagraph || "At ActivityHub Destinations, we don't just book itineraries—we curate unforgettable ground experiences. With over two decades of deep-rooted tourism experience, we are the bridge between your clients and the ultimate local adventures."
 
   return (
     <div style={{ fontFamily: 'sans-serif', maxWidth: '800px', margin: '0 auto', padding: '40px 20px', color: '#333', lineHeight: '1.6' }}>
       <header style={{ borderBottom: '1px solid #eee', paddingBottom: '20px', marginBottom: '40px' }}>
-        <span style={{ fontWeight: 'bold', letterSpacing: '1px', color: '#0070f3' }}>ACTIVITYHUB DESTINATIONS</span>[cite: 1]
+        <span style={{ fontWeight: 'bold', letterSpacing: '1px', color: '#0070f3' }}>ACTIVITYHUB DESTINATIONS</span>
       </header>
       
-      {/* Hero Section */}
       <section style={{ marginBottom: '60px' }}>
         <h1 style={{ fontSize: '2.5rem', marginBottom: '16px', color: '#111' }}>{headline}</h1>
         <p style={{ fontSize: '1.25rem', color: '#666' }}>{subheadline}</p>
         <button style={{ background: '#0070f3', color: '#fff', border: 'none', padding: '12px 24px', fontSize: '1rem', borderRadius: '5px', cursor: 'pointer', marginTop: '10px' }}>
           Partner With Us
-        </button>[cite: 1]
+        </button>
       </section>
 
-      {/* Intro Section */}
       <section style={{ background: '#f9f9f9', padding: '30px', borderRadius: '8px' }}>
         <h2 style={{ fontSize: '1.75rem', marginBottom: '12px' }}>{introHeadline}</h2>
         <p style={{ color: '#444' }}>{introParagraph}</p>
