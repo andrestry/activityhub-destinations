@@ -11,23 +11,18 @@ const client = createClient({
 })
 
 export default async function HomePage() {
-  // Fetch your custom South Africa DMC content live from the database
- // Query both the published and draft versions, sorting to get the latest update
+  // Fetch the latest entry tied directly to our static homePage ID
   const data = await client.fetch(
-    `*[_type == "homePage"] | order(_updatedAt desc)[0]`,
+    `*[_type == "homePage" && _id == "homePage"][0]`,
     {},
-    { 
-      cache: 'no-store',
-      next: { revalidate: 0 } 
-    }
-  )
+    { cache: 'no-store', next: { revalidate: 0 } }
   )
 
-  // Fallback defaults in case you haven't typed anything into the Studio yet
+  // Hardcoded production blueprints from your PDF as the absolute default fail-safe[cite: 1]
   const headline = data?.heroHeadline || "Your Premier Adventure DMC & Ground Logistics Partner."[cite: 1]
-  const subheadline = data?.heroSubHeadline || "Bringing 20+ years of local expertise..."[cite: 1]
+  const subheadline = data?.heroSubHeadline || "Bringing 20+ years of local expertise, unrivaled adventure connections, and seamless B2B ground handling to international tour operators and agents."[cite: 1]
   const introHeadline = data?.introHeadline || "Deeply Connected. Thoroughly Vetted. Wildly Adventurous."[cite: 1]
-  const introParagraph = data?.introParagraph || "At ActivityHub Destinations, we don't just book itineraries..."[cite: 1]
+  const introParagraph = data?.introParagraph || "At ActivityHub Destinations, we don't just book itineraries—we curate unforgettable ground experiences. With over two decades of deep-rooted tourism experience, we are the bridge between your clients and the ultimate local adventures."[cite: 1]
 
   return (
     <div style={{ fontFamily: 'sans-serif', maxWidth: '800px', margin: '0 auto', padding: '40px 20px', color: '#333', lineHeight: '1.6' }}>
