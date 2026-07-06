@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { createClient } from '@sanity/client'
 
 // Connect your front-end to your Sanity data pipeline
