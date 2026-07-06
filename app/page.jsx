@@ -2,7 +2,7 @@ import { createClient } from '@sanity/client'
 
 // Connect your front-end to your Sanity data pipeline
 const client = createClient({
-  projectId: 'YOUR_PROJECT_ID_HERE', // <-- Replace with your 8-character Sanity Project ID!
+  projectId: 'n8tkfq9p', // <-- Replace with your 8-character Sanity Project ID!
   dataset: 'production',
   useCdn: false,
   apiVersion: '2026-07-06'
