@@ -12,11 +12,15 @@ const client = createClient({
 
 export default async function HomePage() {
   // Fetch your custom South Africa DMC content live from the database
-  // Fetch data with an explicit instructions object to completely bypass all network caches
+ // Query both the published and draft versions, sorting to get the latest update
   const data = await client.fetch(
-    `*[_type == "homePage"][0]`,
+    `*[_type == "homePage"] | order(_updatedAt desc)[0]`,
     {},
-    { cache: 'no-store' }
+    { 
+      cache: 'no-store',
+      next: { revalidate: 0 } 
+    }
+  )
   )
 
   // Fallback defaults in case you haven't typed anything into the Studio yet
