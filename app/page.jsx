@@ -11,9 +11,9 @@ const client = createClient({
 })
 
 export default async function HomePage() {
-  // Fetch the latest entry tied directly to our static homePage ID
+  // Grab the absolute most recently altered document of type "homePage" anywhere in your database
   const data = await client.fetch(
-    `*[_type == "homePage" && _id == "homePage"][0]`,
+    `*[_type == "homePage"] | order(_updatedAt desc)[0]`,
     {},
     { cache: 'no-store', next: { revalidate: 0 } }
   )
